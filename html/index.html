@@ -16,45 +16,25 @@
     </label>
     <nav>
       <ul>
-        <li><a href="index.html" aria-current="page">Início</a></li>
-        <li><a href="projetos.html">Projetos</a></li>
-        <li><a href="cadastro.html">Cadastro</a></li>
+        <li><a href="#/" data-rota>Início</a></li>
+        <li><a href="#/projetos" data-rota>Projetos</a></li>
+        <li><a href="#/cadastro" data-rota>Cadastro</a></li>
       </ul>
     </nav>
   </header>
 
-  <main>
-    <h1>Instituto Renascer</h1>
-
-    <section>
-      <h2>Quem somos</h2>
-      <img src="../imagens/equipe-voluntarios.jpg"
-           alt="Voluntários do Instituto Renascer reunidos em uma ação comunitária"
-           width="800" height="450">
-      <p>
-        O Instituto Renascer é uma organização do terceiro setor dedicada a
-        apoiar famílias em situação de vulnerabilidade social por meio de
-        educação, geração de renda e assistência comunitária.
-      </p>
-      <h3>Nossa missão</h3>
-      <p>
-        Promover dignidade e oportunidades reais de transformação social,
-        conectando doadores, voluntários e comunidades.
-      </p>
-    </section>
-
-    <section>
-      <h2>Nosso impacto</h2>
-      <p>Desde 2015, já impactamos diretamente mais de 4.000 pessoas em 12 comunidades.</p>
-      <h3>Números de 2025</h3>
-      <p>320 famílias atendidas · 180 voluntários ativos · 45 projetos concluídos.</p>
-    </section>
-  </main>
+  <main id="app" tabindex="-1"></main>
 
   <footer>
     <p>&copy; 2026 Instituto Renascer — Todos os direitos reservados.</p>
     <p>contato@institutorenascer.org.br</p>
   </footer>
 
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="../js/modules/templates.js"></script>
+  <script src="../js/modules/eventos.js"></script>
+  <script src="../js/modules/router.js"></script>
+  <script src="../js/main.js"></script>
 </body>
 </html>
