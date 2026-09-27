@@ -104,13 +104,31 @@ Renascer.Validacao = (function () {
     return true;
   }
 
+  function iniciarMascaras() {
+    const cpfInput = document.getElementById("cpf");
+    const telefoneInput = document.getElementById("telefone");
+    const cepInput = document.getElementById("cep");
+
+    if (typeof IMask !== "undefined") {
+      if (cpfInput) IMask(cpfInput, { mask: "000.000.000-00" });
+      if (telefoneInput) {
+        IMask(telefoneInput, {
+          mask: [{ mask: "(00) 0000-0000" }, { mask: "(00) 00000-0000" }],
+        });
+      }
+      if (cepInput) IMask(cepInput, { mask: "00000-000" });
+    } else {
+      aplicarMascara(cpfInput, mascaraCPF);
+      aplicarMascara(telefoneInput, mascaraTelefone);
+      aplicarMascara(cepInput, mascaraCEP);
+    }
+  }
+
   function iniciarFormularioCadastro(aoSalvarComSucesso) {
     const form = document.getElementById("form-cadastro");
     if (!form) return;
 
-    aplicarMascara(document.getElementById("cpf"), mascaraCPF);
-    aplicarMascara(document.getElementById("telefone"), mascaraTelefone);
-    aplicarMascara(document.getElementById("cep"), mascaraCEP);
+    iniciarMascaras();
 
     form.querySelectorAll("input, select").forEach((campo) => {
       campo.addEventListener("blur", () => validarCampo(campo));
