@@ -70,8 +70,12 @@ Renascer.Validacao = (function () {
 
   function exibirErro(campo, mensagem) {
     campo.setAttribute("aria-invalid", "true");
-    let mensagemErro = campo.parentElement.querySelector(".erro-campo");
-    if (!mensagemErro) {
+    // Bug corrigido (hotfix 1.0.1): campo.parentElement é o <fieldset>
+    // inteiro (os campos não têm wrapper individual), então buscar
+    // ".erro-campo" nele pegava a mensagem de erro de OUTRO campo do
+    // mesmo fieldset. A busca correta é no irmão imediato.
+    let mensagemErro = campo.nextElementSibling;
+    if (!mensagemErro || !mensagemErro.classList.contains("erro-campo")) {
       mensagemErro = document.createElement("small");
       mensagemErro.className = "erro-campo";
       campo.insertAdjacentElement("afterend", mensagemErro);
@@ -81,8 +85,10 @@ Renascer.Validacao = (function () {
 
   function limparErro(campo) {
     campo.removeAttribute("aria-invalid");
-    const mensagemErro = campo.parentElement.querySelector(".erro-campo");
-    if (mensagemErro) mensagemErro.remove();
+    const proximo = campo.nextElementSibling;
+    if (proximo && proximo.classList.contains("erro-campo")) {
+      proximo.remove();
+    }
   }
 
   function validarCampo(campo) {
