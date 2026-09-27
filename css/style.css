@@ -584,3 +584,51 @@ footer {
   padding: var(--space-4);
   margin-top: var(--space-6);
 }
+
+/* ============================================
+   EXPERIÊNCIA PRÁTICA III — SPA / interatividade
+   ============================================ */
+
+/* Link ativo do menu, controlado via JS (router marca aria-current) */
+nav a[aria-current="page"] {
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+/* Container principal da SPA: precisa ser focável (tabindex="-1") pra
+   levar o foco de teclado pro topo do conteúdo a cada navegação, sem
+   ficar com contorno visual estranho */
+#app:focus {
+  outline: none;
+}
+
+/* Feedback de erro por campo, inserido dinamicamente pelo validacao.js */
+.erro-campo {
+  display: block;
+  color: var(--color-error, #c0392b);
+  margin-top: var(--space-1, 4px);
+}
+
+input[aria-invalid="true"],
+select[aria-invalid="true"] {
+  border-color: var(--color-error, #c0392b);
+}
+
+/* Lista de cadastros salvos em localStorage, na página de cadastro */
+.lista-cadastros {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-3, 12px) 0 0;
+  display: grid;
+  gap: var(--space-2, 8px);
+}
+
+.lista-cadastros li {
+  padding: var(--space-3, 12px);
+  border: 1px solid var(--color-neutral-light, #e0e0e0);
+  border-radius: var(--radius, 6px);
+}
+
+.lista-cadastros-vazia {
+  color: var(--color-neutral-medium, #777);
+}

@@ -1,9 +1,13 @@
 // js/modules/storage.js
+// Responsabilidade única: ler e gravar os cadastros no localStorage.
+// Nenhum outro módulo deve chamar localStorage diretamente — tudo passa
+// por aqui, para manter a lógica de persistência centralizada.
+
 window.Renascer = window.Renascer || {};
 
 Renascer.Storage = (function () {
   const CHAVE = "renascer_cadastros";
-  const LIMITE = 10;
+  const LIMITE = 10; // guarda só os 10 cadastros mais recentes
 
   function listar() {
     try {

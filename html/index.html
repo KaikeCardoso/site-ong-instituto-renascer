@@ -23,6 +23,8 @@
     </nav>
   </header>
 
+  <!-- #app é o único container de conteúdo: o router.js troca o que
+       existe aqui dentro a cada navegação, sem recarregar a página -->
   <main id="app" tabindex="-1"></main>
 
   <footer>
@@ -32,10 +34,17 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
+  <!-- Scripts carregados como tags normais (não type="module") de propósito:
+       assim o projeto funciona abrindo o index.html direto no navegador
+       (file://), sem esbarrar no bloqueio de CORS que módulos ES sofrem
+       nesse protocolo. A modularização é feita via namespace Renascer.* -->
+  <!-- Biblioteca externa: IMask.js, para máscaras de input mais robustas
+       que o CPF/telefone/CEP manuais (ver análise na resposta dissertativa) -->
+  <script src="https://cdn.jsdelivr.net/npm/imask@7.6.1/dist/imask.min.js"></script>
+
+  <script src="../js/modules/storage.js"></script>
   <script src="../js/modules/templates.js"></script>
   <script src="../js/modules/eventos.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/imask@7.6.1/dist/imask.min.js"></script>
-  <script src="../js/modules/storage.js"></script>
   <script src="../js/modules/validacao.js"></script>
   <script src="../js/modules/router.js"></script>
   <script src="../js/main.js"></script>
