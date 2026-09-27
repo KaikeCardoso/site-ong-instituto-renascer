@@ -118,9 +118,12 @@ Renascer.Validacao = (function () {
     if (typeof IMask !== "undefined") {
       if (cpfInput) IMask(cpfInput, { mask: "000.000.000-00" });
       if (telefoneInput) {
-        IMask(telefoneInput, {
-          mask: [{ mask: "(00) 0000-0000" }, { mask: "(00) 00000-0000" }],
-        });
+        // Bug corrigido (hotfix 1.0.2): o array de 2 máscaras (fixo/
+        // celular) fazia o IMask "travar" no formato de 8 dígitos antes
+        // do usuário terminar de digitar o 9º dígito do celular. Como
+        // hoje praticamente todo número é celular, fixamos uma única
+        // máscara — elimina a ambiguidade de seleção automática.
+        IMask(telefoneInput, { mask: "(00) 00000-0000" });
       }
       if (cepInput) IMask(cepInput, { mask: "00000-000" });
     } else {
