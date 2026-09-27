@@ -37,6 +37,8 @@ Renascer.Validacao = (function () {
     },
   };
 
+  // --- Fallback manual (usado só se o IMask.js do CDN não carregar) ---
+
   function aplicarMascara(input, formatador) {
     if (!input) return;
     input.addEventListener("input", () => {
@@ -70,10 +72,11 @@ Renascer.Validacao = (function () {
 
   function exibirErro(campo, mensagem) {
     campo.setAttribute("aria-invalid", "true");
-    // Bug corrigido (hotfix 1.0.1): campo.parentElement é o <fieldset>
-    // inteiro (os campos não têm wrapper individual), então buscar
-    // ".erro-campo" nele pegava a mensagem de erro de OUTRO campo do
-    // mesmo fieldset. A busca correta é no irmão imediato.
+    // Bug corrigido: campo.parentElement é o <fieldset> inteiro (os campos
+    // não têm wrapper individual), então buscar ".erro-campo" nele pegava
+    // a mensagem de erro de OUTRO campo do mesmo fieldset. A busca correta
+    // é no irmão imediato (nextElementSibling), que é sempre exclusivo
+    // deste input.
     let mensagemErro = campo.nextElementSibling;
     if (!mensagemErro || !mensagemErro.classList.contains("erro-campo")) {
       mensagemErro = document.createElement("small");
@@ -115,14 +118,17 @@ Renascer.Validacao = (function () {
     const telefoneInput = document.getElementById("telefone");
     const cepInput = document.getElementById("cep");
 
+    // Integração com a biblioteca externa IMask.js (via CDN, ver html/index.html).
+    // Verificamos typeof IMask antes de usar: se o CDN falhar ao carregar
+    // (ex: sem internet), caímos pro fallback manual abaixo, sem quebrar o form.
     if (typeof IMask !== "undefined") {
       if (cpfInput) IMask(cpfInput, { mask: "000.000.000-00" });
       if (telefoneInput) {
-        // Bug corrigido (hotfix 1.0.2): o array de 2 máscaras (fixo/
-        // celular) fazia o IMask "travar" no formato de 8 dígitos antes
-        // do usuário terminar de digitar o 9º dígito do celular. Como
-        // hoje praticamente todo número é celular, fixamos uma única
-        // máscara — elimina a ambiguidade de seleção automática.
+        // Bug corrigido: o array de 2 máscaras (fixo/celular) fazia o
+        // IMask "travar" no formato de 8 dígitos antes do usuário terminar
+        // de digitar o 9º dígito do celular, obrigando a apagar e redigitar.
+        // Como praticamente todo número hoje é celular (9 dígitos), fixei
+        // uma única máscara — elimina a ambiguidade de seleção automática.
         IMask(telefoneInput, { mask: "(00) 00000-0000" });
       }
       if (cepInput) IMask(cepInput, { mask: "00000-000" });
@@ -139,6 +145,7 @@ Renascer.Validacao = (function () {
 
     iniciarMascaras();
 
+    // valida campo a campo ao perder o foco, pra dar feedback cedo
     form.querySelectorAll("input, select").forEach((campo) => {
       campo.addEventListener("blur", () => validarCampo(campo));
     });

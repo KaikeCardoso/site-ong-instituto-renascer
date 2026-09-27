@@ -2,6 +2,8 @@
 // Responsabilidade única: mapear a URL (hash) para um template, injetar
 // esse HTML dentro de #app e disparar a inicialização específica da
 // rota (ex: ligar os eventos do formulário quando é a rota de cadastro).
+// É este módulo que transforma o site num SPA: a navegação acontece
+// só trocando o conteúdo do #app, sem recarregar o navegador.
 
 window.Renascer = window.Renascer || {};
 

@@ -1,11 +1,14 @@
 // js/modules/eventos.js
 // Responsabilidade única: centralizar listeners de eventos reutilizáveis
-// (cliques de navegação, feedback visual em toast).
+// (cliques de navegação, feedback visual em toast). O router chama estas
+// funções em vez de cada módulo colocar addEventListener por conta própria.
 
 window.Renascer = window.Renascer || {};
 
 Renascer.Eventos = (function () {
   function ligarLinksDeNavegacao(aoNavegar) {
+    // Delegação de evento no document: funciona mesmo para links que
+    // ainda nem existem no DOM (eles são recriados a cada troca de rota)
     document.addEventListener("click", (evento) => {
       const link = evento.target.closest("[data-rota]");
       if (!link) return;
@@ -13,6 +16,7 @@ Renascer.Eventos = (function () {
       evento.preventDefault();
       aoNavegar(link.getAttribute("href"));
 
+      // fecha o menu hambúrguer no mobile após escolher uma rota
       const toggle = document.getElementById("nav-toggle");
       if (toggle) toggle.checked = false;
     });
