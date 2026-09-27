@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instituto Renascer | Cadastro</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <span class="logo">Instituto Renascer</span>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <label for="nav-toggle" class="hamburger" aria-label="Abrir menu de navegação">
+      <span></span><span></span><span></span>
+    </label>
+    <nav>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="projetos.html">Projetos</a></li>
+        <li><a href="cadastro.html" aria-current="page">Cadastro</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Cadastro de Doadores e Voluntários</h1>
+
+    <section>
+      <h2>Junte-se a nós</h2>
+      <p>Preencha o formulário abaixo para se cadastrar como doador ou voluntário. Todos os campos marcados são obrigatórios.</p>
+
+      <div class="alert alert-info">
+        <span class="alert-icon" aria-hidden="true">ℹ️</span>
+        <span>Seus dados são usados apenas para contato do Instituto Renascer e nunca são compartilhados com terceiros.</span>
+      </div>
+
+      <form id="form-cadastro" novalidate>
+
+        <div class="alert alert-success" role="status">
+          <span class="alert-icon" aria-hidden="true">✓</span>
+          <span>Seus dados são usados apenas para contato do Instituto Renascer, nunca compartilhados com terceiros.</span>
+        </div>
+
+        <fieldset>
+          <legend>Dados pessoais</legend>
+
+          <label for="nome">Nome completo</label>
+          <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo"
+                 required minlength="5" pattern="[A-Za-zÀ-ÿ ]+"
+                 title="Digite apenas letras e espaços">
+          <small>Ex: Maria da Silva</small>
+
+          <label for="cpf">CPF</label>
+          <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00"
+                 required inputmode="numeric"
+                 pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+                 title="Formato esperado: 000.000.000-00" maxlength="14">
+          <small>Somente números, a máscara é aplicada automaticamente</small>
+
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+          <small>Usaremos para enviar novidades e comprovantes</small>
+
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000"
+                 required inputmode="numeric"
+                 pattern="\(\d{2}\) \d{4,5}-\d{4}"
+                 title="Formato esperado: (00) 00000-0000" maxlength="15">
+          <small>Com DDD, ex: (11) 91234-5678</small>
+        </fieldset>
+
+        <fieldset>
+          <legend>Endereço</legend>
+
+          <label for="cep">CEP</label>
+          <input type="text" id="cep" name="cep" placeholder="00000-000"
+                 required inputmode="numeric"
+                 pattern="\d{5}-\d{3}"
+                 title="Formato esperado: 00000-000" maxlength="9">
+          <small>Usado apenas para saber sua região</small>
+
+          <label for="cidade">Cidade</label>
+          <input type="text" id="cidade" name="cidade" placeholder="Sua cidade" required>
+        </fieldset>
+
+        <fieldset>
+          <legend>Como deseja ajudar?</legend>
+
+          <label for="tipo">Tipo de participação</label>
+          <select id="tipo" name="tipo" required>
+            <option value="">Selecione uma opção</option>
+            <option value="doador">Doador</option>
+            <option value="voluntario">Voluntário</option>
+            <option value="ambos">Ambos</option>
+          </select>
+        </fieldset>
+
+        <button type="submit">Enviar cadastro</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Instituto Renascer — Todos os direitos reservados.</p>
+    <p>contato@institutorenascer.org.br</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

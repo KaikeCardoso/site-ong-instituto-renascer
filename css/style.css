@@ -1,0 +1,586 @@
+/* ============================================
+   DESIGN SYSTEM — Instituto Renascer
+   ============================================ */
+:root {
+  /* --- Cores primárias (azul institucional) --- */
+  --color-primary-900: #0d3b66;
+  --color-primary-700: #14508a;
+  --color-primary-500: #3a7bd5;
+  --color-primary-100: #dce8f7;
+
+  /* --- Cor de destaque (laranja de ação/CTA) --- */
+  --color-accent-500: #f4a300;
+  --color-accent-100: #fdecc8;
+
+  /* --- Cores neutras (texto, fundo, bordas) --- */
+  --color-neutral-900: #1c1c1c;
+  --color-neutral-500: #666666;
+  --color-neutral-300: #c4c4c4;
+  --color-neutral-100: #f4f6f8;
+  --color-neutral-white: #ffffff;
+
+  /* --- Cores de estado (feedback de formulário) --- */
+  --color-success: #4caf50;
+  --color-error: #d9534f;
+
+  /* --- Escala tipográfica modular (razão 1.25) --- */
+  --font-size-xs: 0.8rem;     /* 12.8px — small/legendas */
+  --font-size-sm: 0.9rem;     /* 14.4px — texto secundário */
+  --font-size-base: 1rem;     /* 16px   — corpo de texto */
+  --font-size-lg: 1.25rem;    /* 20px   — h3 */
+  --font-size-xl: 1.563rem;   /* 25px   — h2 */
+  --font-size-2xl: 1.953rem;  /* 31.25px — h1 */
+
+  /* --- Espaçamentos modulares (base 8px) --- */
+  --space-1: 0.25rem;  /* 4px  */
+  --space-2: 0.5rem;   /* 8px  */
+  --space-3: 1rem;     /* 16px */
+  --space-4: 1.5rem;   /* 24px */
+  --space-5: 2rem;     /* 32px */
+  --space-6: 3rem;     /* 48px */
+
+  /* --- Estrutura auxiliar --- */
+  --radius: 8px;
+  --shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================
+   BREAKPOINTS DO PROJETO
+   480px  — celulares grandes
+   768px  — tablets
+   1024px — notebooks pequenos
+   1280px — desktops
+   1536px — telas largas
+   ============================================ */
+
+/* ============================================
+   GRID SYSTEM — 12 colunas
+   ============================================ */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);   /* mobile: 4 colunas */
+  gap: var(--space-4);
+}
+
+@media (min-width: 480px) {
+  .grid-12 { grid-template-columns: repeat(6, 1fr); }  /* celular grande: 6 colunas */
+}
+
+@media (min-width: 768px) {
+  .grid-12 { grid-template-columns: repeat(8, 1fr); }  /* tablet: 8 colunas */
+}
+
+@media (min-width: 1024px) {
+  .grid-12 { grid-template-columns: repeat(12, 1fr); } /* notebook: 12 colunas completas */
+}
+
+@media (min-width: 1280px) {
+  main { max-width: 1140px; }                          /* desktop: container mais largo */
+}
+
+@media (min-width: 1536px) {
+  main { max-width: 1320px; }                          /* telas largas: container máximo */
+}
+
+/* Cartões de projeto ocupam a largura toda no mobile,
+   metade no tablet e um terço a partir do notebook */
+.projetos-grid .projeto {
+  grid-column: span 4;
+}
+
+@media (min-width: 480px) {
+  .projetos-grid .projeto { grid-column: span 6; }
+}
+
+@media (min-width: 768px) {
+  .projetos-grid .projeto { grid-column: span 4; }
+}
+
+@media (min-width: 1024px) {
+  .projetos-grid .projeto { grid-column: span 4; }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--color-neutral-900);
+  background: var(--color-neutral-100);
+  line-height: 1.6;
+}
+
+/* ============================================
+   HEADER / NAV — Flexbox
+   ============================================ */
+header {
+  background: var(--color-primary-900);
+  color: var(--color-neutral-white);
+  padding: var(--space-3) var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+header .logo {
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: var(--color-neutral-white);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: var(--font-size-base);
+}
+
+nav a:hover,
+nav a:focus {
+  text-decoration: underline;
+}
+
+/* ============================================
+   MENU HAMBÚRGUER — mobile (checkbox hack)
+   ============================================ */
+.nav-toggle {
+  display: none; /* o input checkbox nunca é visível, só controla estado */
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 28px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: var(--color-neutral-white);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* Anima o ícone de "três barras" para um "X" quando o menu abre */
+.nav-toggle:checked ~ .hamburger span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.nav-toggle:checked ~ .hamburger span:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle:checked ~ .hamburger span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (max-width: 767px) {
+  .hamburger {
+    display: flex;
+  }
+
+  header nav {
+    width: 100%;
+    order: 3;
+  }
+
+  nav ul {
+    flex-direction: column;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    gap: 0;
+    transition: max-height 0.3s ease;
+  }
+
+  nav ul li {
+    padding: var(--space-2) 0;
+  }
+
+  /* Seletor de irmão geral (~): quando o checkbox é marcado,
+     a lista de navegação que vem depois do label é expandida */
+  .nav-toggle:checked ~ nav ul {
+    max-height: 300px;
+  }
+}
+
+/* ============================================
+   LAYOUT PRINCIPAL — CSS Grid
+   ============================================ */
+main {
+  max-width: 1000px;
+  margin: var(--space-5) auto;
+  padding: 0 var(--space-4);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 768px) {
+  main.grid-2col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+section {
+  background: var(--color-neutral-white);
+  padding: var(--space-5);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* ============================================
+   TIPOGRAFIA
+   ============================================ */
+h1 {
+  color: var(--color-primary-900);
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-3);
+}
+
+h2 {
+  color: var(--color-primary-900);
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-2);
+  border-left: 4px solid var(--color-accent-500);
+  padding-left: var(--space-2);
+}
+
+h3 {
+  color: var(--color-primary-500);
+  font-size: var(--font-size-lg);
+  margin: var(--space-3) 0 var(--space-1);
+}
+
+p { margin-bottom: var(--space-2); font-size: var(--font-size-base); }
+
+small {
+  display: block;
+  color: var(--color-neutral-500);
+  margin-top: calc(var(--space-2) * -1);
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-xs);
+}
+
+/* ============================================
+   CARTÕES DE PROJETO — Flexbox
+   ============================================ */
+.projetos-grid {
+  display: grid;
+}
+
+.projeto {
+  flex: 1 1 260px;
+  border-top: 1px solid var(--color-neutral-300);
+  padding-top: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+/* ============================================
+   FORMULÁRIO
+   ============================================ */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+fieldset {
+  border: 1px solid var(--color-neutral-300);
+  border-radius: 6px;
+  padding: var(--space-3) var(--space-4);
+}
+
+legend {
+  font-weight: bold;
+  color: var(--color-primary-900);
+  padding: 0 var(--space-1);
+  font-size: var(--font-size-sm);
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: var(--space-1);
+  font-size: var(--font-size-sm);
+}
+
+input,
+select {
+  width: 100%;
+  padding: var(--space-2);
+  border: 2px solid var(--color-neutral-300);
+  border-radius: 4px;
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-2);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+input:invalid:not(:placeholder-shown) {
+  border-color: var(--color-error);
+  background-color: #fdf1f0;
+}
+
+input:valid:not(:placeholder-shown) {
+  border-color: var(--color-success);
+  background-color: #f2f9f2;
+}
+
+button {
+  background: var(--color-accent-500);
+  color: var(--color-primary-900);
+  border: none;
+  padding: var(--space-3);
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+/* :hover — passa o mouse: escurece levemente e ganha sombra */
+button:hover {
+  background: #d98f00;
+  box-shadow: var(--shadow);
+}
+
+/* :focus-visible — navegação por teclado: contorno visível de acessibilidade */
+button:focus-visible {
+  outline: 3px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* :active — durante o clique: "afunda" visualmente o botão */
+button:active {
+  transform: translateY(1px);
+  background: #c17f00;
+}
+
+/* :disabled — indisponível: opacidade reduzida e cursor bloqueado */
+button:disabled {
+  background: var(--color-neutral-300);
+  color: var(--color-neutral-500);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* ============================================
+   BADGES — etiquetas de categorização
+   ============================================ */
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.badge-info {
+  background: var(--color-primary-100);
+  color: var(--color-primary-900);
+}
+
+.badge-success {
+  background: #e3f4e3;
+  color: #2e7d32;
+}
+
+.badge-warning {
+  background: var(--color-accent-100);
+  color: #8a5a00;
+}
+
+/* ============================================
+   ALERT — caixa de aviso fixa no fluxo da página
+   ============================================ */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  border-left: 4px solid transparent;
+  margin-bottom: var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+.alert-icon {
+  font-size: var(--font-size-lg);
+  line-height: 1;
+}
+
+.alert-info {
+  background: var(--color-primary-100);
+  border-left-color: var(--color-primary-500);
+  color: var(--color-primary-900);
+}
+
+.alert-success {
+  background: #e3f4e3;
+  border-left-color: var(--color-success);
+  color: #2e7d32;
+}
+
+.alert-error {
+  background: #fdf1f0;
+  border-left-color: var(--color-error);
+  color: #a83a36;
+}
+
+/* ============================================
+   TOAST — notificação não-obstrutiva temporária
+   ============================================ */
+.toast {
+  position: fixed;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  left: var(--space-4);
+  max-width: 360px;
+  margin-left: auto;
+  background: var(--color-primary-900);
+  color: var(--color-neutral-white);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  transform: translateY(120%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 100;
+}
+
+.toast.toast-show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.toast-success {
+  background: #2e7d32;
+}
+
+.toast-error {
+  background: var(--color-error);
+}
+
+/* ============================================
+   COMPONENTES DE FEEDBACK
+   ============================================ */
+
+/* --- Badges (etiquetas de categorização) --- */
+.badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: 999px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.badge-primary {
+  background: var(--color-primary-100);
+  color: var(--color-primary-900);
+}
+
+.badge-accent {
+  background: var(--color-accent-100);
+  color: #8a5a00;
+}
+
+.badge-success {
+  background: #e3f4e3;
+  color: #2e7d32;
+}
+
+/* --- Alert box (mensagens de sucesso/erro fixas no fluxo) --- */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: 6px;
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-3);
+  border-left: 4px solid transparent;
+}
+
+.alert-icon {
+  font-size: var(--font-size-lg);
+  line-height: 1;
+}
+
+.alert-success {
+  background: #e9f7ea;
+  border-left-color: var(--color-success);
+  color: #256029;
+}
+
+.alert-error {
+  background: #fbecec;
+  border-left-color: var(--color-error);
+  color: #8a2c28;
+}
+
+/* --- Toast (notificação temporária, não bloqueia a tela) --- */
+.toast {
+  position: fixed;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  min-width: 260px;
+  max-width: 90vw;
+  background: var(--color-primary-900);
+  color: var(--color-neutral-white);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  transform: translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.toast-success { border-left: 4px solid var(--color-success); }
+.toast-error { border-left: 4px solid var(--color-error); }
+
+/* ============================================
+   FOOTER
+   ============================================ */
+footer {
+  background: var(--color-primary-900);
+  color: var(--color-neutral-white);
+  text-align: center;
+  padding: var(--space-4);
+  margin-top: var(--space-6);
+}
