@@ -22,6 +22,11 @@
   /* --- Cores de estado (feedback de formulário) --- */
   --color-success: #4caf50;
   --color-error: #d9534f;
+  /* Vermelho mais escuro, só pra TEXTO de erro: #d9534f tem apenas
+     3.96:1 de contraste no fundo claro, abaixo do mínimo de 4.5:1
+     (WCAG 1.4.3) para texto normal. Como borda/fundo de erro exige
+     só 3:1 (1.4.11), --color-error continua servindo esses casos. */
+  --color-error-text: #c0392b;
 
   /* --- Escala tipográfica modular (razão 1.25) --- */
   --font-size-xs: 0.8rem;     /* 12.8px — small/legendas */
@@ -607,7 +612,7 @@ nav a[aria-current="page"] {
 }
 
 #app:focus-visible {
-  outline: 3px solid var(--color-primary, #1a4d8f);
+  outline: 3px solid var(--color-primary-500);
   outline-offset: 2px;
 }
 
@@ -617,9 +622,9 @@ nav a[aria-current="page"] {
   position: absolute;
   top: -40px;
   left: 0;
-  background: var(--color-primary, #1a4d8f);
-  color: #fff;
-  padding: var(--space-2, 8px) var(--space-3, 12px);
+  background: var(--color-primary-900);
+  color: var(--color-neutral-white);
+  padding: var(--space-2) var(--space-3);
   z-index: 1000;
   transition: top 0.15s ease;
 }
@@ -632,47 +637,57 @@ nav a[aria-current="page"] {
 .botao-contraste {
   background: transparent;
   border: 1px solid currentColor;
-  border-radius: var(--radius, 6px);
-  padding: var(--space-1, 4px) var(--space-2, 8px);
+  border-radius: var(--radius);
+  padding: var(--space-1) var(--space-2);
   cursor: pointer;
   font-size: 0.85rem;
 }
 
 .botao-contraste[aria-pressed="true"] {
-  background: var(--color-primary, #1a4d8f);
-  color: #fff;
+  background: var(--color-primary-900);
+  color: var(--color-neutral-white);
 }
 
-/* Tema de alto contraste: paleta reduzida com contraste AAA entre
-   texto e fundo, aplicada via classe na <html> (persistida em
-   localStorage pelo módulo acessibilidade.js) */
+/* Tema de alto contraste: em vez de regras soltas por seletor,
+   sobrescrevemos os PRÓPRIOS design tokens (custom properties) usados
+   em todo o stylesheet. Assim o reskin é automático e completo — todo
+   componente que já usa var(--color-primary-900), var(--color-error)
+   etc. herda a nova paleta sem precisar de uma segunda regra por
+   componente. Cada cor abaixo foi validada com rácio de contraste
+   ≥ 4.5:1 (a maioria ≥ 7:1, nível AAA) sobre fundo branco:
+   preto/branco 21:1, azul de link 9.4:1, laranja de destaque 4.83:1,
+   verde de sucesso 7.44:1, vermelho de erro 7.2:1. */
 html.alto-contraste {
-  --color-primary: #000000;
-  --color-neutral-light: #000000;
-  --color-neutral-medium: #000000;
+  --color-primary-900: #000000;
+  --color-primary-700: #000000;
+  --color-primary-500: #0000ee;
+  --color-primary-100: #ffffff;
+
+  --color-accent-500: #b35900;
+  --color-accent-100: #ffffff;
+
+  --color-neutral-900: #000000;
+  --color-neutral-500: #000000;
+  --color-neutral-300: #000000;
+  --color-neutral-100: #ffffff;
+  --color-neutral-white: #ffffff;
+
+  --color-success: #006400;
+  --color-error: #b30000;
+  --color-error-text: #b30000;
 }
 
-html.alto-contraste body {
-  background: #ffffff;
-  color: #000000;
-}
-
-html.alto-contraste a {
-  color: #0000ee;
-  text-decoration: underline;
-}
-
-html.alto-contraste .toast,
-html.alto-contraste header,
-html.alto-contraste footer {
-  background: #000000;
-  color: #ffffff;
+html.alto-contraste * {
+  /* Reforço geral: garante que nenhuma sombra/gradiente residual do
+     tema padrão reduza o contraste depois do reskin dos tokens */
+  text-shadow: none;
+  box-shadow: none;
 }
 
 /* Feedback de erro por campo, inserido dinamicamente pelo validacao.js */
 .erro-campo {
   display: block;
-  color: var(--color-error, #c0392b);
+  color: var(--color-error-text);
   margin-top: var(--space-1, 4px);
 }
 
