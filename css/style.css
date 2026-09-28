@@ -596,10 +596,77 @@ nav a[aria-current="page"] {
 }
 
 /* Container principal da SPA: precisa ser focável (tabindex="-1") pra
-   levar o foco de teclado pro topo do conteúdo a cada navegação, sem
-   ficar com contorno visual estranho */
+   levar o foco de teclado pro topo do conteúdo a cada navegação.
+   Bug de acessibilidade corrigido nesta etapa: a regra anterior
+   (outline: none) removia o indicador de foco sem oferecer
+   substituto, violando WCAG 2.4.7 (Focus Visible). Agora usamos
+   :focus-visible pra manter um contorno visível apenas na navegação
+   por teclado, sem poluir o clique de mouse. */
 #app:focus {
   outline: none;
+}
+
+#app:focus-visible {
+  outline: 3px solid var(--color-primary, #1a4d8f);
+  outline-offset: 2px;
+}
+
+/* Skip link: fica oculto fora da tela até receber foco por teclado
+   (primeiro Tab da página), permitindo pular direto pro #app */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-primary, #1a4d8f);
+  color: #fff;
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  z-index: 1000;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Botão de alternância de alto contraste */
+.botao-contraste {
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: var(--radius, 6px);
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.botao-contraste[aria-pressed="true"] {
+  background: var(--color-primary, #1a4d8f);
+  color: #fff;
+}
+
+/* Tema de alto contraste: paleta reduzida com contraste AAA entre
+   texto e fundo, aplicada via classe na <html> (persistida em
+   localStorage pelo módulo acessibilidade.js) */
+html.alto-contraste {
+  --color-primary: #000000;
+  --color-neutral-light: #000000;
+  --color-neutral-medium: #000000;
+}
+
+html.alto-contraste body {
+  background: #ffffff;
+  color: #000000;
+}
+
+html.alto-contraste a {
+  color: #0000ee;
+  text-decoration: underline;
+}
+
+html.alto-contraste .toast,
+html.alto-contraste header,
+html.alto-contraste footer {
+  background: #000000;
+  color: #ffffff;
 }
 
 /* Feedback de erro por campo, inserido dinamicamente pelo validacao.js */

@@ -3,5 +3,6 @@
 // o DOM carregar e entrega o controle pro router.
 
 document.addEventListener("DOMContentLoaded", () => {
+  Renascer.Acessibilidade.iniciar();
   Renascer.Router.iniciar();
 });

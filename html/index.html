@@ -8,14 +8,32 @@
 </head>
 <body>
 
+  <!-- Skip link: permite pular a navegação e ir direto ao conteúdo
+       principal via teclado (WCAG 2.4.1 — Bypass Blocks) -->
+  <a href="#app" class="skip-link">Pular para o conteúdo principal</a>
+
   <header>
-    <span class="logo">Instituto Renascer</span>
+    <a href="#/" data-rota class="logo">Instituto Renascer</a>
+
+    <button
+      type="button"
+      id="botao-alto-contraste"
+      class="botao-contraste"
+      aria-pressed="false"
+    >Alto contraste</button>
+
     <input type="checkbox" id="nav-toggle" class="nav-toggle">
-    <label for="nav-toggle" class="hamburger" aria-label="Abrir menu de navegação">
-      <span></span><span></span><span></span>
+    <label
+      for="nav-toggle"
+      class="hamburger"
+      aria-label="Abrir menu de navegação"
+      aria-expanded="false"
+      aria-controls="menu-principal"
+    >
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
     </label>
-    <nav>
-      <ul>
+    <nav aria-label="Navegação principal">
+      <ul id="menu-principal">
         <li><a href="#/" data-rota>Início</a></li>
         <li><a href="#/projetos" data-rota>Projetos</a></li>
         <li><a href="#/cadastro" data-rota>Cadastro</a></li>
@@ -24,12 +42,17 @@
   </header>
 
   <!-- #app é o único container de conteúdo: o router.js troca o que
-       existe aqui dentro a cada navegação, sem recarregar a página -->
-  <main id="app" tabindex="-1"></main>
+       existe aqui dentro a cada navegação, sem recarregar a página.
+       aria-live="polite" garante que leitores de ecrã anunciem a nova
+       "página" a cada troca de rota, já que não há recarregamento real
+       que disparasse esse anúncio nativamente. -->
+  <main id="app" tabindex="-1" aria-live="polite"></main>
 
   <footer>
-    <p>&copy; 2026 Instituto Renascer — Todos os direitos reservados.</p>
-    <p>contato@institutorenascer.org.br</p>
+    <address>
+      <p>&copy; 2026 Instituto Renascer — Todos os direitos reservados.</p>
+      <p><a href="mailto:contato@institutorenascer.org.br">contato@institutorenascer.org.br</a></p>
+    </address>
   </footer>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
@@ -42,6 +65,7 @@
        que o CPF/telefone/CEP manuais (ver análise na resposta dissertativa) -->
   <script src="https://cdn.jsdelivr.net/npm/imask@7.6.1/dist/imask.min.js"></script>
 
+  <script src="../js/modules/acessibilidade.js"></script>
   <script src="../js/modules/storage.js"></script>
   <script src="../js/modules/templates.js"></script>
   <script src="../js/modules/eventos.js"></script>
