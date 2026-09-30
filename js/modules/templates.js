@@ -18,9 +18,24 @@ Renascer.Templates = (function () {
 
       <section>
         <h2>Quem somos</h2>
-        <img src="../imagens/equipe-voluntarios.jpg"
-             alt="Voluntários do Instituto Renascer reunidos em uma ação comunitária"
-             width="800" height="450">
+        <picture>
+          <source
+            type="image/webp"
+            srcset="../imagens/otimizadas/equipe-voluntarios-400w.webp 400w,
+                    ../imagens/otimizadas/equipe-voluntarios-800w.webp 800w,
+                    ../imagens/otimizadas/equipe-voluntarios-1200w.webp 1200w"
+            sizes="(max-width: 600px) 100vw, 800px"
+          >
+          <img
+            src="../imagens/otimizadas/equipe-voluntarios-800w.jpg"
+            srcset="../imagens/otimizadas/equipe-voluntarios-400w.jpg 400w,
+                    ../imagens/otimizadas/equipe-voluntarios-800w.jpg 800w,
+                    ../imagens/otimizadas/equipe-voluntarios-1200w.jpg 1200w"
+            sizes="(max-width: 600px) 100vw, 800px"
+            alt="Voluntários do Instituto Renascer reunidos em uma ação comunitária"
+            width="800" height="430" decoding="async" fetchpriority="high"
+          >
+        </picture>
         <p>
           O Instituto Renascer é uma organização do terceiro setor dedicada a
           apoiar famílias em situação de vulnerabilidade social por meio de
