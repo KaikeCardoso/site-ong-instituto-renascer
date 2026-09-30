@@ -1,0 +1,14 @@
+{
+  "name": "site-ong-instituto-renascer",
+  "version": "1.0.2",
+  "description": "SPA institucional do Instituto Renascer — Experiências Práticas I a IV (Desenvolvimento front-end)",
+  "private": true,
+  "scripts": {
+    "build": "node tools/build.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "html-minifier-terser": "^7.2.0"
+  },
+  "license": "UNLICENSED"
+}
