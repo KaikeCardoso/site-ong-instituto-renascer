@@ -46,6 +46,18 @@ Não há build, bundler ou dependências via npm — é JavaScript puro. A únic
 - `hotfix/*`: correções urgentes, nasce de `main`, volta pra `main` **e** `develop`
 - Releases marcadas com tags semânticas anotadas
 
+## Deploy
+
+Publicado no **GitHub Pages**, direto a partir da pasta `/dist` gerada pelo build. Escolhido em vez de Vercel/Netlify porque:
+
+- O projeto é 100% estático (sem backend, sem serverless functions, sem variáveis de ambiente) — GitHub Pages é a opção mais simples e gratuita pra exatamente esse caso.
+- O código já mora no GitHub, então não exige conectar outra conta/plataforma externa.
+- Vercel e Netlify brilham em projetos com SSR, funções serverless ou frameworks (Next.js etc.) — nada disso se aplica aqui.
+
+CI/CD: `.github/workflows/deploy-pages.yml` builda e publica automaticamente a cada push na `main` (ou seja, a cada release feita via GitFlow — merge de `develop` ou de um `hotfix/*`). O workflow roda `npm ci && npm run build` e publica o conteúdo de `/dist` via `actions/deploy-pages`.
+
+Deploy manual (sem esperar o push): aba **Actions** do repositório → `Deploy para GitHub Pages` → **Run workflow**.
+
 ## Changelog
 
 - **v1.0.0** — MVP: estrutura de pastas, SPA (router/templates/eventos), formulário validado + localStorage, integração do IMask.js

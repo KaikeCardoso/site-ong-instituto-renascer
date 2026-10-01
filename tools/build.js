@@ -106,7 +106,20 @@ async function build() {
     });
   }
 
-  // 5) relatório final
+  // 5) gera um index.html na RAIZ do /dist (sem "../" nos caminhos),
+  //    pronto pra ser servido diretamente como root do site em GitHub
+  //    Pages/Netlify — plataformas assim servem a pasta publicada como
+  //    document root, então o index.html não pode ficar dentro de /html
+  {
+    const htmlRaiz = fs
+      .readFileSync(path.join(DIST, "html/index.html"), "utf8")
+      .replace(/\.\.\/css\//g, "css/")
+      .replace(/\.\.\/js\//g, "js/")
+      .replace(/\.\.\/imagens\//g, "imagens/");
+    fs.writeFileSync(path.join(DIST, "index.html"), htmlRaiz);
+  }
+
+  // 6) relatório final
   const totalAntes = relatorio.reduce((s, r) => s + r.antes, 0);
   const totalDepois = relatorio.reduce((s, r) => s + r.depois, 0);
 
