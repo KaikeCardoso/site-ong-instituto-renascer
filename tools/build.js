@@ -119,6 +119,14 @@ async function build() {
     fs.writeFileSync(path.join(DIST, "index.html"), htmlRaiz);
   }
 
+  // 5b) o templates.js também monta caminhos de imagem (via JS), então
+  //     precisa do mesmo ajuste: no site publicado o index.html fica na raiz
+  {
+    const arq = path.join(DIST, "js/modules/templates.js");
+    const js = fs.readFileSync(arq, "utf8").replace(/\.\.\/imagens\//g, "imagens/");
+    fs.writeFileSync(arq, js);
+  }
+
   // 6) relatório final
   const totalAntes = relatorio.reduce((s, r) => s + r.antes, 0);
   const totalDepois = relatorio.reduce((s, r) => s + r.depois, 0);
