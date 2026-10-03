@@ -714,3 +714,10 @@ select[aria-invalid="true"] {
 .lista-cadastros-vazia {
   color: var(--color-neutral-medium, #777);
 }
+
+/* Imagens responsivas: a foto tem width/height fixos no HTML (800x430)
+   e estourava a largura em telas pequenas, causando rolagem lateral */
+img {
+  max-width: 100%;
+  height: auto;
+}
