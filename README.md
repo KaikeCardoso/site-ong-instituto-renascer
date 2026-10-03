@@ -20,23 +20,36 @@ Site institucional que apresenta o Instituto Renascer, lista seus projetos socia
 /html      → index.html (único ponto de entrada da SPA)
 /css       → style.css
 /imagens   → assets estáticos
+  /otimizadas → imagens em WebP/JPG responsivas (400w, 800w, 1200w)
 /js
   main.js  → bootstrap da aplicação
   /modules
-    router.js      → navegação por hash, sem reload
-    templates.js    → geração de HTML dinâmico (Template Literals)
+    router.js        → navegação por hash, sem reload
+    templates.js     → geração de HTML dinâmico (Template Literals)
     eventos.js       → delegação de clique, toast
     validacao.js     → validação de formulário + máscaras (IMask.js)
     storage.js       → persistência dos cadastros no localStorage
+    acessibilidade.js → recursos de acessibilidade (WCAG 2.1 AA)
+/tools
+  build.js → build de produção (minificação), gera a pasta /dist
 ```
 
 ## Como instalar e executar localmente
+
+### Desenvolvimento (sem bundler)
 
 1. `git clone <url-do-repositório>`
 2. Entre na pasta do projeto
 3. Abra `html/index.html` direto no navegador (duplo clique)
 
-Não há build, bundler ou dependências via npm — é JavaScript puro. A única dependência externa (IMask.js) é carregada via CDN, então é preciso ter internet no primeiro carregamento. Opcionalmente, use a extensão **Live Server** do VS Code durante o desenvolvimento.
+Em desenvolvimento, o projeto roda **sem bundler e sem instalar nada**: é JavaScript puro, e a única dependência externa (IMask.js) é carregada via CDN, então é preciso ter internet no primeiro carregamento. Opcionalmente, use a extensão **Live Server** do VS Code.
+
+### Build de produção (opcional)
+
+O comando `npm run build` é **opcional**: serve apenas para minificar HTML, CSS e JS e gerar a pasta `/dist` usada na publicação. Não é necessário para rodar ou editar o projeto.
+
+1. `npm install` (instala as ferramentas de build: esbuild e html-minifier-terser)
+2. `npm run build` (gera a pasta `/dist`, ignorada pelo Git)
 
 ## Estratégia de versionamento (GitFlow)
 
@@ -63,3 +76,4 @@ Deploy manual (sem esperar o push): aba **Actions** do repositório → `Deploy 
 - **v1.0.0** — MVP: estrutura de pastas, SPA (router/templates/eventos), formulário validado + localStorage, integração do IMask.js
 - **v1.0.1** — fix: mensagem de erro vazando entre inputs do mesmo fieldset
 - **v1.0.2** — fix: máscara de telefone travando no formato de 8 dígitos
+- **v1.1.0** — minificação de produção (esbuild + html-minifier-terser), imagens WebP responsivas, acessibilidade WCAG 2.1 AA (skip link, ARIA, foco visível, alto contraste) e deploy automatizado via GitHub Actions
